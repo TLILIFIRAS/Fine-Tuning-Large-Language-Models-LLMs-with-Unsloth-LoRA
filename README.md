@@ -4,6 +4,7 @@
 > Created and maintained by [Firas Tlili](https://medium.com/@firastlili).
 
 ---
+![thumbnail](thunb.png)
 
 ## 🚀 Project Overview
 
@@ -11,23 +12,6 @@ This repository demonstrates how to **fine-tune state-of-the-art language models
 
 By combining **Unsloth’s GPU-optimized training engine** with **parameter-efficient tuning (LoRA)** and optional **4-bit quantization**, you can adapt large LLMs to your custom datasets **up to 2× faster** and with **70% less memory usage** than traditional fine-tuning.
 
----
-
-## 📚 Table of Contents
-- [Motivation](#-motivation)
-- [Key Features](#-key-features)
-- [Architecture](#-architecture)
-- [Installation](#️-installation)
-- [Quick Start](#-quick-start)
-- [Configuration](#️-configuration)
-- [Training Pipeline](#-training-pipeline)
-- [Evaluation & Export](#-evaluation--export)
-- [Results](#-results)
-- [Tips & Best Practices](#-tips--best-practices)
-- [Acknowledgments](#-acknowledgments)
-- [License](#-license)
-
----
 
 ## 💡 Motivation
 
@@ -54,35 +38,21 @@ This project bridges that gap by using **parameter-efficient fine-tuning (PEFT)*
 ---
 
 ## 🏗️ Architecture
-┌───────────────────────────────────────────┐
-│ Dataset │
-│ (Instruction, Input, Response pairs) │
-└───────────────────────────────────────────┘
-│
-▼
-┌───────────────────────────────────────────┐
-│ Base Model Loader (Unsloth) │
-│ → Load model in 4-bit / 8-bit precision │
-│ → Freeze base weights │
-└───────────────────────────────────────────┘
-│
-▼
-┌───────────────────────────────────────────┐
-│ LoRA Adapter Injection │
-│ → Add trainable low-rank matrices │
-│ → Define rank (r), alpha, dropout │
-└───────────────────────────────────────────┘
-│
-▼
-┌───────────────────────────────────────────┐
-│ Fine-Tuning (SFT Trainer) │
-│ → Train only adapter weights │
-│ → Evaluate on validation split │
-└───────────────────────────────────────────┘
-│
-▼
-┌───────────────────────────────────────────┐
-│ Merge / Export Model │
-│ → Merge LoRA into base weights │
-│ → Save and deploy (HF Hub / local) │
-└───────────────────────────────────────────┘
+![Architecture](arch.png)
+
+## 🧠 Tips & Best Practices
+
+- 🔹 **LoRA Rank:** Use ranks **8–32** for small datasets; increase for complex or large-scale tasks.  
+- 🔹 **Data Quality:** Always verify dataset formatting — avoid trailing spaces, inconsistent keys, or newline issues.  
+- 🔹 **Learning Rate:** Start with **2e-4** and fine-tune based on validation loss trends.  
+- 🔹 **Memory Optimization:** Enable **gradient checkpointing** to save GPU memory.  
+- 🔹 **Evaluation:** Assess both **quantitative metrics** (BLEU, ROUGE, accuracy) and **qualitative results** (response quality).  
+- 🔹 **Deployment:** Merge adapters before serving models — set `merge_lora_weights=True`.  
+- 🔹 **Backup:** Regularly back up checkpoints to prevent loss during long runs.
+
+## 🙏 Acknowledgments
+
+- 🪶 [**Unsloth**](https://unsloth.ai) — for the efficient fine-tuning framework.  
+- 🤗 [**Hugging Face Transformers**](https://huggingface.co/transformers) — model APIs and tokenizer tools.  
+- 🔧 [**PEFT**](https://github.com/huggingface/peft) — implementation of LoRA and adapter methods.  
+- ✍️ Original guide by [**Firas Tlili**](https://medium.com/@firastlili/fine-tuning-large-language-models-llms-efficiently-with-unsloth-lora-54b6e10fbfcb).
