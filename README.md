@@ -4,7 +4,6 @@
 > Created and maintained by [Firas Tlili](https://medium.com/@firastlili).
 
 ---
-![thumbnail](thunb.png)
 
 ## 🚀 Project Overview
 
@@ -38,7 +37,7 @@ This project bridges that gap by using **parameter-efficient fine-tuning (PEFT)*
 ---
 
 ## 🏗️ Architecture
-![Architecture](arch.png)
+![Architecture](arch.webp)
 
 ## 🧠 Tips & Best Practices
 
